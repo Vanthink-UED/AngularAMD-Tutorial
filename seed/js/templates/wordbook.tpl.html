@@ -1,0 +1,49 @@
+<div class="m-wordbook">
+    <h4>
+        我的单词本
+        <button type="button" class="btn btn-info pull-right" ng-click="finishEvent()">返回</button>
+    </h4>
+    <!--div class="search-form m-form">
+        <div class="btn-group">
+            <input type="text" class="text" />
+            <button type="button" class="btn btn-primary"><span class="fui-search"></span></button>
+            <div class="form-desc-tips">输入单词</div>
+        </div>  
+       
+    </div-->
+    <div class="book-result">
+        
+        <table class="m-table  single-line">
+            <thead>
+                <tr>
+                    <th width="95"><label><input type="checkbox" name="all" class="js-select-all" ng-checked="allSelected" ng-click="selectAllEvent($event)" />全选</label></th>
+                    <th>单词</th>
+                    <th width="90">发音</th>
+                    <th style="width:430px;">释义</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  dir-paginate="item in list | itemsPerPage: 10" total-items="total" current-page="pageno" ng-click="selectItemEvent($index,$event)">
+                    <td style="height:38px;"> <input type="checkbox"  class="js-select-item" ng-checked="item.checked"  value="{{ item['ubint64_no'] }}" />
+                            <div class="hidden-check"></div>
+                    </td>
+                    <td>
+                        <span class="word">{{ item.char64_vocabulary }}</span>
+                    </td>
+                    <td>
+                        <span class="pronunceation">  </span>
+                        <a href="" ng-click="speakWordEvent(item.char64_vocabulary,$event)" class="fui-mic"</a>
+                    </td>
+                    <td >
+                        <span class="wrap-contents" title="{{ item.vchar512_explaination }}" style="width:430px;">{{ item.vchar512_explaination }} </span>
+                    </td>
+                </tr>
+                <tr ng-show="list.length==0 && loaded"> <td colspan="4">暂未添加单词</td> </tr>
+                <tr ng-show="!loaded"> <td colspan="4">
+                    <img src="http://img1.vued.vanthink.cn/vuedcca37dabcb5bc724cb7418658e526a1e.gif"/> 数据加载中...     
+                </td> </tr>
+            </tbody>
+        </table>  
+        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeEvent(newPageNumber)" ng-show="list.length>0"></dir-pagination-controls> 
+    </div>
+</div>
