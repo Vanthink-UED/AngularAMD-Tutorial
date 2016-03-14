@@ -29,6 +29,6 @@ project.xcworkspace
 local.properties
 
 
-app_src/node_modules/
-app_src/android/
+node_modules/
+
 npm-debug.log
