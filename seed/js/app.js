@@ -28,13 +28,13 @@ define(['angularAMD', 'angular-route','vued.cat','ng-progress'], function (angul
             }))
             .when("/controller", angularAMD.route({
                 templateUrl: 'views/controller.html',
-                controller: 'HomeCtrl',
-                controllerUrl: './js/controller/home.js'
+                controller: 'ControllerCtrl',
+                controllerUrl: './js/controller/controller.js'
             }))
             .when("/module", angularAMD.route({
                 templateUrl: 'views/module.html',
-                controller: 'HomeCtrl',
-                controllerUrl: './js/controller/home.js'
+                controller: 'ModuleCtrl',
+                controllerUrl: './js/controller/module.js'
             }))
             .when("/seed", angularAMD.route({
                 templateUrl: 'views/seed.html',

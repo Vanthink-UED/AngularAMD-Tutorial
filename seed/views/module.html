@@ -62,4 +62,100 @@ directive/navMenu.js</p>
     });
 });
 </code></pre>
+
+<h3>Demo</h3>
+<div class="demo" style="padding:20px;border:1px solid #ddd;">
+    
+    <table class="m-table bordered">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>age</th>
+                <th>control</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr dir-paginate="item in list | itemsPerPage:10" total-items="totalCount" current-page="pageno">
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td><a href="" ng-click="viewOldEvent()">View Detail</a></td>
+            </tr>
+            <tr ng-show="list==false">
+                <td colspan="3">暂无数据</td>
+            </tr>
+        </tbody>
+    </table>
+    <dir-pagination-controls boundary-links="true" ng-hide="list.length==0" on-page-change="pageChangeEvent(newPageNumber)"></dir-pagination-controls>
+    
+</div>
+<h4>代码</h4>
+<pre><code class="lang-javascript">
+// module.js
+define([&#39;app&#39;,&#39;ngload!pagination&#39;], function (app) {  
+    app.controller(&#39;ModuleCtrl&#39;, function ($scope,$routeParams,$http,$location) {  
+
+        $scope.list = [];
+        $scope.totalCount = 100;
+        $scope.init = function() {
+            var blocks = document.querySelectorAll(&#39;pre code&#39;);
+            for(var i=0;i&lt;blocks.length;i++) {
+
+                hljs.highlightBlock(blocks[i]);    
+            }
+            $scope.refresh();
+        };
+
+        $scope.refresh = function() {
+            var list = [];
+            for(var i = 0;i&lt;10; i++){
+                list.push({
+                    &#39;name&#39;: &#39;Naruto&#39;,
+                    &#39;sex&#39;: &#39;man&#39;,
+                    &#39;age&#39;: parseInt(Math.random() * 100)
+                });
+            }
+            $scope.list = list;
+        };
+
+        $scope.pageChangeEvent = function(num) {
+            $scope.pageno = num;
+            $scope.refresh();
+        };
+
+        $scope.viewOldEvent = function() {
+            alert(this.item.name + &#39; is &#39; + this.item.age + &#39; years old!&#39;);
+        }
+
+
+        $scope.init();
+    });
+});
+</code></pre>
+<h5>html</h5>
+<pre><code class="lang-html">&lt;div class=&quot;demo&quot; style=&quot;padding:20px;border:1px solid #ddd;&quot;&gt;
+
+    &lt;table class=&quot;m-table bordered&quot;&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;name&lt;/th&gt;
+                &lt;th&gt;age&lt;/th&gt;
+                &lt;th&gt;control&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr dir-paginate=&quot;item in list | itemsPerPage:10&quot; total-items=&quot;totalCount&quot; current-page=&quot;pageno&quot;&gt;
+                &lt;td&gt;{{item.name}}&lt;/td&gt;
+                &lt;td&gt;{{item.age}}&lt;/td&gt;
+                &lt;td&gt;&lt;a href=&quot;&quot; ng-click=&quot;viewOldEvent()&quot;&gt;View Detail&lt;/a&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr ng-show=&quot;list==false&quot;&gt;
+                &lt;td colspan=&quot;3&quot;&gt;暂无数据&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;dir-pagination-controls boundary-links=&quot;true&quot; ng-hide=&quot;list.length==0&quot; on-page-change=&quot;pageChangeEvent(newPageNumber)&quot;&gt;&lt;/dir-pagination-controls&gt;
+
+&lt;/div&gt;
+</code></pre>
+
 <p><a href="#seed">下一章:种子使用</a> </p>

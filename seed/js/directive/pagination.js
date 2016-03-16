@@ -39,14 +39,13 @@ define(['angularAMD'], function (angularAMD) {
             var expression = tAttrs.dirPaginate;
             // regex taken directly from https://github.com/angular/angular.js/blob/master/src/ng/directive/ngRepeat.js#L211
             var match = expression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
-
             var filterPattern = /\|\s*itemsPerPage\s*:[^|]*/;
             if (match[2].match(filterPattern) === null) {
                 throw 'pagination directive: the \'itemsPerPage\' filter must be set.';
             }
             var itemsPerPageFilterRemoved = match[2].replace(filterPattern, '');
             var collectionGetter = $parse(itemsPerPageFilterRemoved);
-
+            
             addNoCompileAttributes(tElement);
 
             // If any value is specified for paginationId, we register the un-evaluated expression at this stage for the benefit of any
@@ -191,16 +190,26 @@ define(['angularAMD'], function (angularAMD) {
             terminal: true
         };
     }
-
     function dirPaginationControlsDirective(paginationService, paginationTemplate) {
 
         var numberRegex = /^\d+$/;
-
+        var strVar="";
+        strVar += "<!--to do -->";
+        strVar += "<ul class=\"m-pagination\" ng-if=\"1 < pages.length\">";
+        strVar += "    <li ng-if=\"directionLinks\" class=\"ng-scope\">";
+        strVar += "        <a href=\"\" ng-click=\"setCurrent(pagination.current - 1)\" class=\"ng-binding\" ng-class=\"{ disabled : pagination.current == 1 }\" >‹<\/a>";
+        strVar += "    <\/li>";
+        strVar += "    <li ng-repeat=\"pageNumber in pages track by $index\" ng-class=\"{ }\">";
+        strVar += "        <a href=\"\" ng-click=\"setCurrent(pageNumber)\" ng-class=\"{ active : pagination.current == pageNumber , disabled : pageNumber == '...' }\">{{ pageNumber }}<\/a>";
+        strVar += "    <\/li>";
+        strVar += "";
+        strVar += "    <li ng-if=\"directionLinks\"  class=\"ng-scope\">";
+        strVar += "        <a href=\"\" ng-click=\"setCurrent(pagination.current + 1)\" class=\"ng-binding\" ng-class=\"{ disabled : pagination.current == pagination.last }\">›<\/a>";
+        strVar += "    <\/li>";
+        strVar += "<\/ul>";
         return {
-            restrict: 'EA',
-            templateUrl: function(elem, attrs) {
-                return attrs.templateUrl || paginationTemplate.getPath();
-            },
+            restrict: 'AE',
+            template: strVar,
             scope: {
                 maxSize: '=?',
                 onPageChange: '&?',
@@ -241,11 +250,7 @@ define(['angularAMD'], function (angularAMD) {
                 return paginationService.getCollectionLength(paginationId) ;
             }, function(length) {
                 if (0 < length) {
-                    element.show(); 
                     generatePagination();
-                    
-                }else{
-                   element.hide(); 
                 }
             });
 
@@ -253,7 +258,7 @@ define(['angularAMD'], function (angularAMD) {
                 return (paginationService.getItemsPerPage(paginationId));
             }, function(current, previous) {
                 if (current != previous && typeof previous !== 'undefined') {
-                    goToPage(scope.pagination.current);
+                    //goToPage(scope.pagination.current);
                 }
             });
 
@@ -261,14 +266,15 @@ define(['angularAMD'], function (angularAMD) {
                 return paginationService.getCurrentPage(paginationId);
             }, function(currentPage, previousPage) {
                 if (currentPage != previousPage) {
-                    goToPage(currentPage);
+                   // goToPage(currentPage);
                 }
             });
 
             scope.setCurrent = function(num) {
                 if (isValidPageNumber(num)) {
                     num = parseInt(num, 10);
-                    paginationService.setCurrentPage(paginationId, num);
+                    //paginationService.setCurrentPage(paginationId, num);
+                    goToPage(num);
                 }
             };
 

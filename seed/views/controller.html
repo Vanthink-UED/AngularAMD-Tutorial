@@ -52,4 +52,59 @@ define([&#39;app&#39;], function (app) {
     });
 });
 </code></pre>
+
+<h3>演示:</h3>
+
+<div class="demo" style="padding:20px;border:1px solid #ddd;">
+    <button class="btn btn-default" ng-click="clickEvent()">获取数据</button>
+    <table class="m-table bordered">
+        <thead>
+            <tr>
+                <th>cityname</th>
+                <th>city code</th>
+                <th>country code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in list">
+                <td>{{item.adminName3}}</td>
+                <td>{{item.adminCode1}}</td>
+                <td>{{item.countryCode}}</td>
+            </tr>
+            <tr ng-show="list==false">
+                <td colspan="3">暂无数据</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4>演示代码:</h4>
+<pre><code class="lang-javascript">
+define([&#39;app&#39;], function (app) {  
+    app.controller(&#39;ControllerCtrl&#39;, function ($scope,$routeParams,$http,$location) {  
+        $scope.list = false;
+        $scope.init = function() {
+            var blocks = document.querySelectorAll(&#39;pre code&#39;);
+            for(var i=0;i&lt;blocks.length;i++) {
+
+                hljs.highlightBlock(blocks[i]);    
+            }
+        }
+        $scope.refresh = function() {
+            var url = &#39;http://api.geonames.org/postalCodeLookupJSON?postalcode=6600&amp;country=AT&amp;username=demo&#39;;
+
+            $http.get(url).
+              success(function (data, status, headers, config) {
+                  $scope.list = data.postalcodes;
+              }).
+              error(function (data, status, headers, config) {
+                   $scope.list = false;
+              });
+        }
+
+        $scope.clickEvent = function(e) {
+            $scope.refresh();
+        }
+    });
+});
+</code></pre>
 <p><a href="#module">下一章:模块</a> </p>
