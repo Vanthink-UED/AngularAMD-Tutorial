@@ -6,16 +6,8 @@
 
 [英文文档](http://marcoslin.github.io/angularAMD/#/home)
 
-# 目录
 
-+ 文件引入及目录
-+ 定义main.js
-+ 开发你的第一个页面
-+ Angular Directive Service的使用
-+ 大型应用扩展
-+ 小结
-
-### 种子使用
+### 快速开始
 
 ``` bash
 git clone  https://github.com/Vanthink-UED/AngularAMD-Tutorial
