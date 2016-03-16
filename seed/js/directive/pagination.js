@@ -485,7 +485,7 @@ define(['angularAMD'], function (angularAMD) {
      */
     function paginationTemplateProvider() {
 
-        var templatePath = 'public/js/templates/pagination.tpl.html';
+        var templatePath = './js/templates/pagination.tpl.html';
 
         this.setPath = function(path) {
             templatePath = path;

@@ -1,0 +1,65 @@
+<h2 id="-module">创建 Module</h2>
+<p>目前 angularAMD 支持的模块内部定义的方法有:</p>
+<ul>
+<li><p><code>.provider</code></p>
+</li>
+<li><p><code>.controller</code></p>
+</li>
+<li><p><code>.factory</code></p>
+</li>
+<li><p><code>.service</code></p>
+</li>
+<li><p><code>.constant</code></p>
+</li>
+<li><p><code>.value</code></p>
+</li>
+<li><p><code>.directive</code></p>
+</li>
+<li><p><code>.filter</code></p>
+</li>
+<li><p><code>.animation</code></p>
+</li>
+</ul>
+<p>你可以快速写一个 <code>fatory</code></p>
+<pre><code class="lang-javascript">define([&#39;app&#39;], function (app) {
+    app.factory(&#39;Pictures&#39;, function (...) {
+        ...
+    });
+});
+</code></pre>
+<h3 id="-">加载单独定义的模块服务</h3>
+<p>如果我们希望自己写一些单独定义的功能的服务，比如<code>service</code>,<code>directive</code>等。<code>angularAMD</code>提供了这样的功能;
+directive/navMenu.js</p>
+<pre><code class="lang-javascript">define([&#39;angularAMD&#39;], function (angularAMD) {
+    angularAMD.directive(&#39;navMenu&#39;, function (...) {
+        ...
+    });
+});
+</code></pre>
+<p>app.js</p>
+<pre><code class="lang-javascript">define([&#39;angularAMD&#39;, &#39;directive/navMenu&#39;], function (angularAMD) {
+    var app = angular.module(app_name, [&#39;webapp&#39;]);
+    ...
+    // `navMenu` is automatically registered bootstrap 
+    return angularAMD.bootstrap(app);
+});
+</code></pre>
+<h3 id="-modules">引入第三方 Modules</h3>
+<p>第三方插件我们经常会用到，在AngularAMD中使用这些插件可以直接在main.js定义后直接在app.js中引用即可.</p>
+<p><code>ng-progress</code> 中已经在main.js中定义过;</p>
+<pre><code class="lang-javascript">define([&#39;angularAMD&#39;, &#39;angular-route&#39;,&#39;vued.cat&#39;,&#39;ng-progress&#39;], function (angularAMD) {
+
+    var app = angular.module(&quot;webapp&quot;, [&#39;ngRoute&#39;,&#39;Vued.cat&#39;,&#39;ngProgress&#39;]);
+
+    // ...
+    return angularAMD.bootstrap(app);
+});
+</code></pre>
+<p>如果你希望在某个controller 中引入第三方插件，比如一个分页插件</p>
+<pre><code class="lang-javascript">define([&#39;app&#39;, &#39;ngload!pagination&#39;], function (app) {
+    app.controller(&#39;ModuleCtrl&#39;, function ($scope,$http) { 
+
+    });
+});
+</code></pre>
+<p><a href="#seed">下一章:种子使用</a> </p>

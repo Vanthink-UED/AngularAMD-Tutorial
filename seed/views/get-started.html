@@ -1,0 +1,63 @@
+<h2 id="-">快速开始</h2>
+<p><a href="https://github.com/marcoslin/angularAMD">angularAMD</a>是作者@ <a href="https://github.com/marcoslin">marcoslin</a>使用 RequireJS ＋ AngularJS开发的前端<code>mvvm</code>框架,因此你可以使用它快速创建一款Web App.他特别适合快速快速开发<code>SPA</code>应用。</p>
+<h3 id="-">安装</h3>
+<h4 id="bower">bower</h4>
+<pre><code class="lang-bash">bower install angularAMD
+</code></pre>
+<h4 id="node">node</h4>
+<pre><code class="lang-bash">npm install angular-amd
+</code></pre>
+<h4 id="-">外链</h4>
+<pre><code class="lang-bash">//cdn.jsdelivr.net/angular.amd/0.2/angularAMD.min.js
+</code></pre>
+<h3 id="-">使用</h3>
+<h4 id="-require-js-">定义require.js 入口文件</h4>
+<p>我们定义<code>main.js</code> 作为项目的入口文件,在这里可以定义我们的组件以及组件的依赖项;然后在<code>deps</code>里设置我们的项目主文件
+<code>app.js</code></p>
+<pre><code class="lang-javascript">// 定义入口文件
+
+require.config({
+        baseUrl: &quot;./js/&quot;,
+        urlArgs:  &#39;v=&#39; + (new Date()).getTime() + Math.random() * 10000,
+        paths: {
+            &#39;angular&#39;: &#39;./lib/angular.min&#39;,
+            &#39;angular-route&#39;: &#39;./lib/angular-route&#39;,
+            &#39;angularAMD&#39;: &#39;./lib/angularAMD.min&#39;,
+            &#39;ngload&#39; : &#39;./lib/&#39; + &#39;ngload.min&#39;,
+            &#39;ng-progress&#39;: &#39;./lib/ngprogress.min&#39;,
+            &#39;vued.cat&#39;: &#39;./directive/cat&#39;,
+        },
+        shim: {
+                &#39;angularAMD&#39;: [&#39;angular&#39;],
+                &#39;angular-route&#39;: [&#39;angular&#39;],
+                &#39;ng-progress&#39;: [&#39;angular&#39;],
+        },
+        deps: [&#39;app&#39;]
+});
+</code></pre>
+<h4 id="-angularjs">启动 AngularJS</h4>
+<p>当所有的组件依赖项全部被定义完成，那么app.js作为 Angular 项目的入口文件,将开始执行启动程序.</p>
+<pre><code class="lang-javascript">define([&#39;angularAMD&#39;], function (angularAMD) {
+    var app = angular.module(app_name, [&#39;webapp&#39;]);
+    ... // Setup app here. E.g.: run .config with $routeProvider
+    return angularAMD.bootstrap(app);
+});
+</code></pre>
+<p>如果引导程序被触发，那么原有 <code>ng-app</code>就不应该被放置在 <code>HTML</code>中. <code>angularAMD.bootstrap(app)</code>将会取代程序启动。</p>
+<h3 id="-">配置路由</h3>
+<p>通过使用 <code>angularAMD.route</code> 我们可以动态配置所需要加载的 <code>controllers</code>;</p>
+<pre><code class="lang-javascript">app.config(function ($routeProvider) {
+    $routeProvider.when(
+        &quot;/home&quot;,
+        angularAMD.route({
+            templateUrl: &#39;views/home.html&#39;,
+            controller: &#39;HomeController&#39;,
+            controllerUrl: &#39;./js/controller/home&#39;
+        })
+    );
+});
+</code></pre>
+<p><code>angularAMD.route</code> 主要目的是去设置 require.js 中 <code>resolve</code> 去进行惰性加载 <code>controller</code> 以及 <code>view</code>,无论
+你传入什么样的参数值进去，都会被返回。</p>
+<p>这样访问 <code>index.html#/home</code> 既可以查看所做的修改了</p>
+<p><a href="#directory">下一章:目录划分</a> </p>

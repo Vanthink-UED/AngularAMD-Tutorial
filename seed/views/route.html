@@ -1,0 +1,97 @@
+<h2 id="angularamd-route-">angularAMD.route 路由配置</h2>
+<p>通过使用 <code>angularAMD.route</code> 我们可以动态配置所需要加载的 <code>controllers</code>;</p>
+<pre><code class="lang-javascript">app.config(function ($routeProvider) {
+    $routeProvider.when(
+        &quot;/home&quot;,
+        angularAMD.route({
+            templateUrl: &#39;views/home.html&#39;,
+            controller: &#39;HomeController&#39;,
+            controllerUrl: &#39;./js/controller/home&#39;
+        })
+    );
+});
+</code></pre>
+<h4 id="-">指定默认访问地址</h4>
+<p>通过配置<code>otherwise</code>,我们可以讲没有定义的路由地址默认请求到404或者首页上来。</p>
+<pre><code class="lang-javascript">app.config(function ($routeProvider) {
+    $routeProvider
+
+        .when(&quot;/home&quot;, angularAMD.route({
+            templateUrl: &#39;views/home.html&#39;,
+            controller: &#39;HomeCtrl&#39;,
+            controllerUrl: &#39;./js/controller/home.js&#39;
+        }))
+
+        ...
+
+    .otherwise({
+        redirectTo: &quot;/home&quot;
+    });
+});
+</code></pre>
+<h4 id="-controllerurl">不设置 controllerUrl</h4>
+<p>当然如果你已经在 <code>main.js</code> 中定义了controller 的地址这样你可以不用设置controlerUrl</p>
+<pre><code class="lang-javascript">// main.js
+paths: { &#39;HomeController&#39;: &#39;scripts/controller&#39; }
+</code></pre>
+<h4 id="-controller">不设置 controller</h4>
+<p>如果你忽略了在配置中设置<code>controller</code>选项，那么<code>angularAMD.route</code>则会讲函数从<code>controlerUrl</code>返回回来，那么这样
+你可以避免抛出一个未定义的controller 名称的错误。</p>
+<pre><code class="lang-javascript">define([&#39;app&#39;], function (app) {
+    return [&quot;$scope&quot;, function ($scope) {
+        ...
+    }];
+});
+</code></pre>
+<h3 id="-">扩展路由</h3>
+<p>当然我们可以自定义设置路由的返回，我们可以自定义扩展一个函数，动态解析url,自动匹配controller 和 controllerUrl.</p>
+<pre><code class="lang-javascript">/** 路由分析 传入路由地址自动拆分寻找 view 和 controller
+ ** @routeUrl  路由定义
+ ** @data 是否需要数据
+ ** 输入 &#39;/test/home&#39; =&gt; { view: &#39;/test_home/view&#39;,controller:TestHomeCtrl,controllerUrl: /test/home.js }
+ **/
+
+var routeConfig = function (routeUrl, data) {
+    var paramStr = &#39;&#39;;
+    if (typeof (data) == &#39;object&#39; &amp;&amp; data != {}) {
+        paramStr = &#39;?&#39;.serialize(data);
+    };
+    var t = routeUrl.replace(/\//g, &#39;-&#39;);
+
+    var routeArr = t.split(&#39;-&#39;);
+    routeArr = routeArr.splice(1);
+
+    var viewUrl =  &#39;/&#39; + routeArr.join(&#39;_&#39;) + &#39;/view&#39;;
+    // JS_ROOT 为 js 根目录
+    var jsUrl = JS_ROOT + &#39;/&#39; + routeArr[0] + &#39;/&#39; + routeArr.splice(1).join(&#39;-&#39;) + &#39;.js&#39;;
+    var c = dashToCamel(t + &#39;-&#39; + &#39;ctrl&#39;);
+    return {
+        templateUrl: viewUrl + &#39;?&#39; + paramStr,
+        controller: c,
+        controllerUrl: jsUrl
+    }
+
+}
+</code></pre>
+<h3 id="-">监测路由</h3>
+<p>我们可以在<code>app.js</code> 去检测路由的请求状态</p>
+<pre><code class="lang-javascript">app.run(function($rootScope) {
+
+    var ngProgress = ngProgressFactory.createInstance();
+
+    $rootScope.$on(&#39;$routeChangeStart&#39;, function() {
+        // 路由请求开始    
+    });
+
+    $rootScope.$on(&#39;$routeChangeSuccess&#39;, function() {
+       // 路由请求完成
+    });
+
+    $rootScope.$on(&#39;$routeChangeError&#39;, function() {
+       // 路由请求出错
+    });
+
+});
+</code></pre>
+<p>更多参数设置: <a href="https://docs.angularjs.org/api/ngRoute/service/$route">https://docs.angularjs.org/api/ngRoute/service/$route</a></p>
+<p><a href="#controller">下一章:控制器</a> </p>

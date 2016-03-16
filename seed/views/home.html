@@ -1,10 +1,32 @@
 <style type="text/css">
     .c-home{
-        
+        width: 720px;
+        text-align: center;
+    }
+    .c-home img{
+        width: 480px;
+    }
+    .c-home .btn-wrap{
+        text-align: center;
+    }
+    .c-home .btn{
+        width: 150px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        border-radius: 25px;
+    }
+    .c-home .tips{
+        padding: 15px 0;
     }
 </style>
-
-<div class="components">
-    <img src="./img/angular-amd-logo.png" />
-    <h1>AngularAMD 指南</h1>
+<div class="components c-home">
+    <p>
+        <img src="./img/angular-amd-logo.png" alt="Alt text" title="angular-amd-logo">
+    </p>
+    <p class="btn-wrap">
+        <a class="btn btn-primary" href="#get-started">快速开始</a>
+    </p>
+    <div class="tips">Power By Require.js + Angular.js</div>
 </div>
+
