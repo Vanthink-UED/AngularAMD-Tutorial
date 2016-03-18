@@ -1,5 +1,5 @@
 ## 快速开始
-[angularAMD](https://github.com/marcoslin/angularAMD)是作者@ [marcoslin](https://github.com/marcoslin)使用 RequireJS ＋ AngularJS开发的前端`mvvm`框架,因此你可以使用它快速创建一款Web App.他特别适合快速快速开发`SPA`应用。
+[angularAMD](https://github.com/marcoslin/angularAMD)是作者@ [marcoslin](https://github.com/marcoslin)使用 RequireJS ＋ AngularJS开发的前端`mvvm`框架,因此你可以使用它快速创建一款Web App.它特别适合快速开发`SPA`应用。
 
 ### 安装
 
@@ -83,7 +83,7 @@ app.config(function ($routeProvider) {
 `angularAMD.route` 主要目的是去设置 require.js 中 `resolve` 去进行惰性加载 `controller` 以及 `view`,无论
 你传入什么样的参数值进去，都会被返回。
 
-这样访问 `index.html#/home` 既可以查看所做的修改了
+这样访问 `index.html#/home` 就可以查看所做的修改了
 
 [下一章:目录划分](#directory) 
 
