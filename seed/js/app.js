@@ -72,7 +72,7 @@ define(['angularAMD', 'angular-route','vued.cat','ng-progress'], function (angul
         $rootScope.$on('$routeChangeSuccess', function() {
             // code highlight
             ngProgress.complete();
-            
+            document.querySelector('body').className ="";
             var blocks = document.querySelectorAll('pre code');
             for(var i=0;i<blocks.length;i++) {
                 

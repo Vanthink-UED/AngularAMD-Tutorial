@@ -1,0 +1,84 @@
+<h2 id="controller-">controller 的使用</h2>
+<p>在AngularAMD定义controller非常简单,我们推荐两种写法:</p>
+<pre><code class="lang-javascript">// home.js
+define([&#39;app&#39;], function (app) {  
+    app.controller(&#39;ControllerCtrl&#39;, function ($scope,$routeParams,$http,$location) {  
+        // 数据集
+        $scope.list = false;
+
+        // 初始化函数 需要在 view 里面和 ng-init 绑定
+        $scope.init = function() {
+
+        }
+
+        // 刷新数据
+        $scope.refresh = function() {
+
+        }
+
+        // 绑定点击事件 和 指定 view 中 ng-click 绑定
+        $scope.clickEvent = function(e) {
+
+        }
+
+    });
+});
+</code></pre>
+<p>或者我们也可以这样写</p>
+<pre><code class="lang-javascript">// controller.js
+define([&#39;app&#39;], function (app) {  
+    app.controller(&#39;ControllerCtrl&#39;, function ($scope,$routeParams,$http,$location) {  
+        var modules = {
+
+            init: function() {
+                this.list = false;       
+            },
+
+            refresh: function() {
+
+            },
+
+            events:{
+                click: function(e) {
+
+                }
+            },
+
+
+        };
+
+        return angular.extend($scope, modules);
+
+    });
+});
+</code></pre>
+<pre><code class="lang-javascript">
+define([&#39;app&#39;], function (app) {  
+    app.controller(&#39;ControllerCtrl&#39;, function ($scope,$routeParams,$http,$location) {  
+        $scope.list = false;
+        $scope.init = function() {
+            var blocks = document.querySelectorAll(&#39;pre code&#39;);
+            for(var i=0;i&lt;blocks.length;i++) {
+
+                hljs.highlightBlock(blocks[i]);    
+            }
+        }
+        $scope.refresh = function() {
+            var url = &#39;http://api.geonames.org/postalCodeLookupJSON?postalcode=6600&amp;country=AT&amp;username=demo&#39;;
+
+            $http.get(url).
+              success(function (data, status, headers, config) {
+                  $scope.list = data.postalcodes;
+              }).
+              error(function (data, status, headers, config) {
+                   $scope.list = false;
+              });
+        }
+
+        $scope.clickEvent = function(e) {
+            $scope.refresh();
+        }
+    });
+});
+</code></pre>
+<p><a href="#module">下一章:模块</a> </p>
