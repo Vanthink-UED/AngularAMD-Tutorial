@@ -1,6 +1,6 @@
 # Angular AMD 快速入门
 
-[angularAMD](https://github.com/marcoslin/angularAMD)是作者@ [marcoslin](https://github.com/marcoslin)使用 RequireJS ＋ AngularJS开发的前端`mvvm`框架,因此你可以使用它快速创建一款Web App.他特别适合快速快速开发`SPA`应用。
+[angularAMD](https://github.com/marcoslin/angularAMD)是作者@ [marcoslin](https://github.com/marcoslin)使用 RequireJS ＋ AngularJS开发的前端`mvvm`框架,因此你可以使用它快速创建一款Web App.他特别适合快速开发`SPA`应用。
 
 [中文文档](http://vanthink-ued.github.io/AngularAMD-Tutorial/index.html#/get-started)
 
